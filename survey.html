@@ -1,0 +1,198 @@
+<!--
+Scripting Languages Final Project
+Author: Andrew Finch
+Last Update: 02/19/2017
+-->
+
+<html>
+    <head>
+        <title>Whatever Games</title>
+        
+        <style type="text/css">
+            header {
+                text-align: center;
+                background-color: lightskyblue;
+                font-family: Arial;
+                font-size: 300%;
+            }
+            
+            main {
+                text-align: center;
+            }
+            
+            h2 {
+                color: crimson;
+                font-family: Arial;
+                font-size: 200%;
+            }
+            
+            a h3 {
+                font-size: 150%;
+            }
+        </style>
+        
+        <script>
+            //Function to clear the input fields of the form when the
+            //user clicks on the clear button
+            function doClear() {
+                //Set the value of the text fields to be an empty string
+                document.survey.name.value = "";
+                document.survey.email.value = "";
+                document.survey.feedback.value = "";
+                
+                //Set the value of all of the radio buttons to false
+                //to make sure they are unselected
+                document.survey.rating[0].checked = false;
+                document.survey.rating[1].checked = false;
+                document.survey.rating[2].checked = false;
+                document.survey.rating[3].checked = false;
+                document.survey.rating[4].checked = false;
+                
+                //Set the values of all the dropdown menus to "--"
+                document.survey.game.value = "--";
+            }//end function
+            
+            //Function to handle when user clicks on the submit button
+            //on the form
+            function doSubmit() {
+                
+                //Check if the form has been filled in before showing alert
+                if (validateText() === false) {
+                    alert("Required data is missing in Step 1");
+                    return;
+                }
+                
+                //Check if validateRadio returns false, means the user did not
+                //select a type
+                if (validateRadio() === false) {
+                    alert("Required data is missing in Step 2");
+                    return;
+                }
+                
+                if (validateDropdown() === false) {
+                    alert("Required data is missing in Step 2");
+                    return;
+                }
+                
+                if (validateTextArea() === false) {
+                    alert("Required data is missing in Step 2");
+                    return;
+                }
+                
+                //Display a message that the form was submitted
+                alert("Your survey has been submitted.");
+                
+                //Return to the calling code
+                return;
+            }//end function
+            
+            //Function is to validate the text fields on the survey
+            //Returns true if the fields are populated, false if any field is empty
+            function validateText() {
+                //Get the value of the name field and test to see if it is empty
+                var name = document.survey.name.value;
+                
+                //Test the name field to see if its empty
+                if (name.length === 0) {
+                    return false; //validation fails because the field is empty
+                }
+                
+                var email = document.survey.email.value;
+                if (email.length === 0) {
+                    return false;
+                }
+                
+                //Return true if all of the fields we tested had a length greater
+                //than zero, meaning the user filled them in
+                return true;
+            }//end function
+            
+            function validateRadio() {
+                //Check the rating array elements to see if any of them have a
+                //true value for the checked property
+                if (document.survey.rating[0].checked) {
+                    return true;
+                }
+                
+                if (document.survey.rating[1].checked) {
+                    return true;
+                }
+                
+                if (document.survey.rating[2].checked) {
+                    return true;
+                }
+                
+                if (document.survey.rating[3].checked) {
+                    return true;
+                }
+                
+                if (document.survey.rating[4].checked) {
+                    return true;
+                }
+                
+                //If none of the radio buttons for size were checked, then return false
+                return false;
+            }
+            
+            function validateDropdown() {
+                var game = document.survey.game.value;
+                if (game === "--") {
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            //Validates the text area question was answered
+            function validateTextArea() {
+                var feedback = document.survey.feedback.value;
+                if (feedback.length === 0) {
+                    return false;
+                }
+                
+                return true;
+            }
+        </script>
+    </head>
+    
+    <body>
+        <header>
+            <h1>Whatever Games</h1>
+        </header>
+        
+        <main>
+            <form name="survey">
+                <h4>Step 1: Enter your user information</h4>
+                <font face="Courier New">
+                Name: &nbsp;&nbsp;&nbsp;<input name="name" size="50" type="text"><br>
+                Email: &nbsp;&nbsp;<input name="email" size="50" type="text"><br>
+                </font>
+                
+                <h4>Step 2: Answer the survey questions</h4>
+                <p>On a scale from 1 to 5, 5 being the best, how would you rate our game?</p>
+                <input name="rating" type="radio">1
+                <input name="rating" type="radio">2
+                <input name="rating" type="radio">3
+                <input name="rating" type="radio">4
+                <input name="rating" type="radio">5<br>
+                
+                <p>Which of the following games would you like to see next?</p>
+                <select name="game">
+                    <option>--</option>
+                    <option>Simon Says</option>
+                    <option>Pac Man</option>
+                    <option>Galliga</option>
+                    <option>Fallout 4</option>
+                </select>
+                
+                <p>What other feedback do you have for us?</p>
+                <textarea name="feedback" rows="4" cols="100"></textarea><br>
+                
+                <input type="button" value="Submit Survey" onClick="doSubmit()">
+                <input type="button" value="Clear Entries" onClick="doClear()">
+            </form>
+            
+            <a href="index.html">Home</a>
+        </main>
+    </body>
+</html>
